@@ -14,7 +14,7 @@ const ContactList = () => {
 
   useEffect(()=>{
 dispatch(fetchContacts())
-  }, [])
+  }, [dispatch])
 
   const handleDeleteContact = (id) => {
     dispatch(deleteContact(id));
