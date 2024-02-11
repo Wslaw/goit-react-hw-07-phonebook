@@ -45,7 +45,7 @@ const contactsSlice = createSlice({
         },
         deleteContactSuccess: (state, { payload: id }) => {
              state.isLoading = false;
-            state.items = state.items.filter(({ contact }) => contact.id !== id);
+            state.items = state.items.filter(( contact ) => contact.id !== id);
         },
         deleteContactError: (state, { payload }) => {
             state.isLoading = false;
@@ -72,8 +72,10 @@ const contactsSlice = createSlice({
     }
 });
 
-export const {  fetchContactsLoading, fetchContactsSuccess, fetchContactsError } = contactsSlice.actions;
-export const { addContactsLoading, addContactsSuccess, addContactsError } = contactsSlice.actions;
-export const { deleteContactLoading, deleteContactSuccess, deleteContactError} = contactsSlice.actions
+export const { fetchContactsLoading, fetchContactsSuccess, fetchContactsError,
+    addContactsLoading, addContactsSuccess, addContactsError,
+    deleteContactLoading, deleteContactSuccess, deleteContactError } = contactsSlice.actions;
+// export const {  } = contactsSlice.actions;
+// export const { } = contactsSlice.actions
 
 export default contactsSlice.reducer;

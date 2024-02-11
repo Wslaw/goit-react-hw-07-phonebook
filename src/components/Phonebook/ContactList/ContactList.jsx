@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
-import *as  deleteContact  from '../../../redux/contacts/contacts-slice';
-
+// import  {deleteContact}  from '../../../redux/contacts/contacts-slice';
+import { deleteContact } from '../../../redux/contacts/contacts-operations';
 import styles from './contactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredContacts } from '../../../redux/contacts/contacts-selectors';
