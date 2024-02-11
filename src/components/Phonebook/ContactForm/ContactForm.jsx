@@ -1,18 +1,14 @@
-// import { useState } from 'react';
-import { nanoid } from 'nanoid';
+import { selectAllContacts } from '../../../redux/contacts/contacts-selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilteredContacts } from '../../../redux/contacts/contacts-selectors';
-import { addContacts } from '../../../redux/contacts/contacts-slice';
-import Notiflix from 'notiflix';
-
-
 import styles from './contactForm.module.css';
-
+import { nanoid } from '@reduxjs/toolkit';
+import Notiflix from 'notiflix';
+import { addContact } from '../../../redux/contacts/contacts-operations';
+// import { addContactsSuccess } from '../../../redux/contacts/contacts-slice';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getFilteredContacts);
-
+  const contacts = useSelector(selectAllContacts); // Получаем все контакты из хранилища
 
   const handleSubmit = e => {
     e.preventDefault();   
@@ -22,29 +18,28 @@ const ContactForm = () => {
 
     const normalizedName = nameInput.value.toLowerCase();
     const isDuplicate = contacts.some(
-      contact => contact.name.toLowerCase() !== normalizedName
+      contact => contact.name.toLowerCase() === normalizedName
     );
-      if (isDuplicate) {
-        // alert(`${nameInput.value} is already in the phone book.`);
-        Notiflix.Notify.failure(
-          `${nameInput.value} is already in the phone book.`
-        );
 
-        e.target.reset();
-      } else {
-        dispatch(
-          addContacts({
-            id: nanoid(),
-            name: nameInput.value,
-            number: numberInput.value,
-          })
-        );
-        e.target.reset();
-      }
-    
+    if (isDuplicate) {
+      // Если контакт уже существует, обрабатываем ошибку
+      Notiflix.Notify.failure(
+        `${nameInput.value} is already in the phone book.`
+      );
+
+      e.target.reset();
+    } else {
+      // Если контакт не существует, добавляем его
+      dispatch(
+        addContact({
+          id: nanoid(),
+          name: nameInput.value,
+          phone: numberInput.value,
+        })
+      );
+      e.target.reset();
+    }
   };
- 
-
   
   return (
     <div>
