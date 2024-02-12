@@ -4,15 +4,14 @@ import styles from './contactForm.module.css';
 import { nanoid } from '@reduxjs/toolkit';
 import Notiflix from 'notiflix';
 import { addContact } from '../../../redux/contacts/contacts-operations';
-// import { addContactsSuccess } from '../../../redux/contacts/contacts-slice';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectAllContacts); // Получаем все контакты из хранилища
+  const contacts = useSelector(selectAllContacts);
 
   const handleSubmit = e => {
-    e.preventDefault();   
-    
+    e.preventDefault();
+
     const nameInput = e.target.elements.name;
     const numberInput = e.target.elements.number;
 
@@ -22,14 +21,12 @@ const ContactForm = () => {
     );
 
     if (isDuplicate) {
-      // Если контакт уже существует, обрабатываем ошибку
       Notiflix.Notify.failure(
         `${nameInput.value} is already in the phone book.`
       );
 
       e.target.reset();
     } else {
-      // Если контакт не существует, добавляем его
       dispatch(
         addContact({
           id: nanoid(),
@@ -40,16 +37,16 @@ const ContactForm = () => {
       e.target.reset();
     }
   };
-  
+
   return (
     <div>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.wrapper}>
-          <label htmlFor='name' className={styles.formLabel}>
+          <label htmlFor="name" className={styles.formLabel}>
             Name
           </label>
           <input
-            id='name'
+            id="name"
             className={styles.input}
             type="text"
             name="name"
@@ -58,11 +55,11 @@ const ContactForm = () => {
             required
             placeholder="Enter your Name."
           />
-          <label htmlFor='number' className={styles.formLabel}>
+          <label htmlFor="number" className={styles.formLabel}>
             Number
           </label>
           <input
-            id='number'
+            id="number"
             className={styles.input}
             type="tel"
             name="number"

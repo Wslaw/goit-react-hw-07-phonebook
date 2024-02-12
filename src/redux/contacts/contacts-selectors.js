@@ -6,7 +6,6 @@ export const selectFilteredContacts = store => {
   console.log(store.contacts);
   if (!filter) {
      return { items, isLoading, error };
-    // return store.contacts;
   }
   console.log(filter);
   const normalizedFilter = filter.toLowerCase();
@@ -15,7 +14,6 @@ export const selectFilteredContacts = store => {
     name.toLowerCase().includes(normalizedFilter)
   );
   return {
-    // contacts: filteredContacts,
     items: filteredContacts,
     isLoading,
     error,
