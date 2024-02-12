@@ -11,7 +11,7 @@ export const requestFetchContacts = async () => {
 
 export const requestAddContacts = async body => {
   const { data } = await contactsInstance.post('/', body);
-  console.log('data=', data);
+  // console.log('data=', data);
   return data;
 };
 

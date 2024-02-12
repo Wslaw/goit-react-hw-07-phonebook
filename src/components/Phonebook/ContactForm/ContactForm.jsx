@@ -16,7 +16,9 @@ const ContactForm = () => {
     const numberInput = e.target.elements.number;
 
     const normalizedName = nameInput.value.toLowerCase();
-    const isDuplicate = contacts.some(
+    
+    // console.log(contacts.items);
+    const isDuplicate = contacts.items.some(
       contact => contact.name.toLowerCase() === normalizedName
     );
 
