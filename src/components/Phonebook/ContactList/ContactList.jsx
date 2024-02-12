@@ -18,7 +18,7 @@ const ContactList = () => {
     dispatch(deleteContact(id));
   };
 
-  if (!items || !Array.isArray(items) || items.length === 0) {
+  if (!items || items.length === 0) {
     return <p>No contacts found.</p>;
   }
 

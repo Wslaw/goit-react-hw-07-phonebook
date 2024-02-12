@@ -29,7 +29,7 @@ const contactsSlice = createSlice({
     addContactsSuccess: (state, { payload }) => {
       state.isLoading = false;
       state.items.push(payload);
-      console.log('items= ', state.items);
+      // console.log('items= ', state.items);
     },
     addContactsError: (state, { payload }) => {
       state.isLoading = false;

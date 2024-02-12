@@ -23,7 +23,6 @@ export const fetchContacts = ()=>{
 } 
 
 export const addContact =(body)=>{
-    console.log(body);
     const func = async (dispatch)=>{
 
 try {
@@ -38,7 +37,7 @@ try {
     }
     return func;
 }
-console.log("api-",contactsApi)
+// console.log("api-",contactsApi)
 export const deleteContact = (id) =>{
     const func = async (dispatch) => {
                 try {
