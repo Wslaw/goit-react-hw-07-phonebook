@@ -43,9 +43,11 @@ const contactsSlice = createSlice({
     state.isLoading = true;
     state.error = null;
         },
-        deleteContactSuccess: (state, { payload: id }) => {
+        // deleteContactSuccess: (state, { payload: id }) => {
+        deleteContactSuccess: (state, { payload}) => {
              state.isLoading = false;
-            state.items = state.items.filter(( contact ) => contact.id !== id);
+            // state.items = state.items.filter(( contact ) => id !== contact.id);
+            state.items = state.items.filter(({id}) => id !== payload);
         },
         deleteContactError: (state, { payload }) => {
             state.isLoading = false;

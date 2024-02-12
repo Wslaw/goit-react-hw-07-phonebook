@@ -16,7 +16,6 @@ const Phonebook = () => {
           <h2 className={styles.title}>Contacts</h2>
           <p className={styles.text}>Find contacts by name</p>
           <Filter />
-
           <ContactList />
         </div>
       </div>

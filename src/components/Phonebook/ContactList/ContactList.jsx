@@ -9,7 +9,7 @@ import { fetchContacts } from '../../../redux/contacts/contacts-operations';
 
 const ContactList = () => {
   const {items, isLoading, error} = useSelector(selectFilteredContacts);
-  // console.log( contacts);
+  // console.log( items);
   const dispatch = useDispatch();
 
   useEffect(()=>{
@@ -25,8 +25,8 @@ if (!items || !Array.isArray(items) || items.length === 0) {
   return <p>No  contacts found.</p>;
 }
 
-  const elements = items.map(({ id, name, number }) => (
-    <li key={id}>{name}: {number}
+  const elements = items.map(({ id, name, phone }) => (
+    <li key={id}>{name}: {phone}
       <button onClick={() => handleDeleteContact(id)}
         className={styles.btnDelete} type='button'>Delete</button></li>
   ));
