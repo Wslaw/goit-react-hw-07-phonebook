@@ -1,52 +1,56 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as contactsApi from '../../api/contacts-api';
-import {
-    fetchContactsLoading, fetchContactsSuccess, fetchContactsError,
-    addContactsLoading, addContactsSuccess, addContactsError,
-    deleteContactLoading, deleteContactSuccess, deleteContactError
-} from './contacts-slice'
+import Notiflix from 'notiflix';
 
-export const fetchContacts = ()=>{
-    const func = async (dispatch)=>{
-
-        try {
-            dispatch(fetchContactsLoading());
-            const data = await contactsApi.requestFetchContacts();
-            dispatch(fetchContactsSuccess(data));
-
-
-        } catch (error) {
-            dispatch(fetchContactsError(error.message));
-        }
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchAll',
+  async (_, thunkAPI) => {
+    try {
+      const data = await contactsApi.requestFetchContacts();
+    //   console.log(data);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
+  }
+);
 
-    return func;
-} 
-
-export const addContact =(body)=>{
-    const func = async (dispatch)=>{
-
-try {
-    dispatch(addContactsLoading());
-    const data =  await contactsApi.requestAddContacts(body);
-    dispatch(addContactsSuccess(data));
-
-} catch (error) {
-    dispatch(addContactsError(error.message));
-
-}
+export const addContact = createAsyncThunk(
+  'contacts/addContact',
+  async (body, { rejectWithValue }) => {
+    try {
+      const data = await contactsApi.requestAddContacts(body);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
-    return func;
-}
-// console.log("api-",contactsApi)
-export const deleteContact = (id) =>{
-    const func = async (dispatch) => {
-                try {
-                    dispatch(deleteContactLoading());
-                    await contactsApi.requestDeleteContacts(id);
-                    dispatch(deleteContactSuccess(id))
-                } catch (error) {
-                    dispatch(deleteContactError(error.message));
-                }
-            }
-            return func;
-}
+  },
+  {
+    condition: ({name}, { getState }) => {
+      const { contacts } = getState();
+      const normalizedName = name.toLowerCase();
+      const isDuplicate = contacts.items.some(item => {
+        const normalizedCurrentName = item.name.toLowerCase();
+        return normalizedCurrentName === normalizedName;
+      });
+      if (isDuplicate) {
+        Notiflix.Notify.failure(
+          `${name} is already in the phonebook.`
+          );
+          return false;
+      }
+    },
+  }
+);
+
+export const deleteContact = createAsyncThunk(
+  'contacts/delete',
+  async (id, { rejectWithValue }) => {
+    try {
+      await contactsApi.requestDeleteContacts(id);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
