@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredContacts } from '../../../redux/contacts/contacts-selectors';
 import { fetchContacts } from '../../../redux/contacts/contacts-operations';
 
+
 const ContactList = () => {
   const { items, isLoading, error } = useSelector(selectFilteredContacts);
   const dispatch = useDispatch();
